@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>短视频浏览</title>
+  <style>
+    body {
+      margin: 0;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      color: #f1f1f1;
+    }.video-container {
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 20px;
+}
+
+img {
+  width: 80vmin;
+  height: 80vmin;
+  max-width: 450px;
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>  <div class="video-container">
+    <a href="https://v.douyin.com/5TytMo0Jhs0/" target="_blank">
+      <img src="https://via.placeholder.com/500x500.png?text=视频+1" alt="视频1">
+    </a>
+  </div>  <div class="video-container">
+    <a href="https://v.douyin.com/PXdIzYuK9tI/" target="_blank">
+      <img src="https://via.placeholder.com/500x500.png?text=视频+2" alt="视频2">
+    </a>
+  </div>  <footer style="text-align:center;padding:20px 10px;font-size:14px;line-height:1.8;color:#ddd;opacity:0.9;">
+    <p>联系邮箱：<a href="mailto:thekingmebear@gmail.com" style="color:#4fc3f7;text-decoration:none;">thekingmebear@gmail.com</a></p>
+    <p>继承人：uani.ome.22（TikTok）</p>
+    <p>@2026 ©€€€€</p>
+    <p>该网站创建于 2026 年 4 月 15 日，请勿复制。</p>
+    <p>访问人数：<span id="visitor-count">加载中...</span></p>
+  </footer>  <script>
+    // 使用免费API统计访问量
+    fetch('https://api.countapi.xyz/hit/my-simple-site-2026/visits')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('visitor-count').innerText = data.value;
+      })
+      .catch(() => {
+        document.getElementById('visitor-count').innerText = '无法加载';
+      });
+  </script></body>
+</html>
