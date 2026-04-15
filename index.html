@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="zh">
-<head>
+<!DOCTYPE html><html lang="zh"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>短视频浏览</title>
@@ -38,8 +37,34 @@ img:hover {
   transform: scale(1.05);
 }
 
-  </style>
-</head>
+  </style>  <!-- 不蒜子访问统计 -->  <!-- Firebase SDK --><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script><script>
+  // ⚠️ Thay config này bằng của bạn (mình sẽ hướng dẫn dưới)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDUtKVYWMEoO7nuI2WMs_hEOnX_OTrus7g",
+    authDomain: "chat-onli-ee17e.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+    projectId: "chat-onli-ee17e",
+    storageBucket: "chat-onli-ee17e.firebasestorage.app",
+    messagingSenderId: "182377881896",
+    appId: "1:182377881896:web:9f46d5b46ce1a0a800701d"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const countRef = db.ref('visits');
+
+  // Tăng lượt truy cập
+  countRef.transaction((current) => {
+    return (current || 0) + 1;
+  });
+
+  // Lắng nghe và hiển thị
+  countRef.on('value', (snapshot) => {
+    const value = snapshot.val();
+    document.getElementById('busuanzi_value_site_uv').innerText = value;
+  });
+</script></head>
 <body>  <div class="video-container">
     <a href="https://v.douyin.com/5TytMo0Jhs0/" target="_blank">
       <img src="ảnh/2.jpg" alt="视频1">
@@ -53,16 +78,6 @@ img:hover {
     <p>继承人：uani.ome.22（TikTok）</p>
     <p>@2026 ©€€€€</p>
     <p>该网站创建于 2026 年 4 月 15 日，请勿复制。</p>
-    <p>访问人数：<span id="visitor-count">加载中...</span></p>
-  </footer>  <script>
-    // 使用免费API统计访问量
-    fetch('https://api.countapi.xyz/hit/my-simple-site-2026/visits')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('visitor-count').innerText = data.value;
-      })
-      .catch(() => {
-        document.getElementById('visitor-count').innerText = '无法加载';
-      });
-  </script></body>
+    <p>🔥 当前访问人数：<span id="busuanzi_value_site_uv">加载中...</span> 👀</p>
+  </footer></body>
 </html>
