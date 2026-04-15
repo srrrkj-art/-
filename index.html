@@ -42,9 +42,9 @@ img:hover {
   const firebaseConfig = {
     apiKey: "AIzaSyDUtKVYWMEoO7nuI2WMs_hEOnX_OTrus7g",
     authDomain: "chat-onli-ee17e.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+    databaseURL: "https://chat-onli-ee17e-default-rtdb.firebaseio.com",
     projectId: "chat-onli-ee17e",
-    storageBucket: "chat-onli-ee17e.firebasestorage.app",
+    storageBucket: "chat-onli-ee17e.appspot.com",
     messagingSenderId: "182377881896",
     appId: "1:182377881896:web:9f46d5b46ce1a0a800701d"
   };
@@ -52,17 +52,32 @@ img:hover {
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const countRef = db.ref('visits');
+  // 总访问
+  const totalRef = db.ref('visits');
 
-  // Tăng lượt truy cập
-  countRef.transaction((current) => {
-    return (current || 0) + 1;
+  // 今日访问（按日期键）
+  const todayKey = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+  const todayRef = db.ref('daily/' + todayKey);
+
+  // 初始化
+  totalRef.once('value', (s)=>{ if (s.val()===null) totalRef.set(0); });
+  todayRef.once('value', (s)=>{ if (s.val()===null) todayRef.set(0); });
+
+  // 进入页面时 +1
+  totalRef.transaction(c => (c||0)+1);
+  todayRef.transaction(c => (c||0)+1);
+
+  // 显示总访问
+  totalRef.on('value', (s)=>{
+    const v = s.val() || 0;
+    document.getElementById('busuanzi_value_site_uv').innerText = v;
   });
 
-  // Lắng nghe và hiển thị
-  countRef.on('value', (snapshot) => {
-    const value = snapshot.val();
-    document.getElementById('busuanzi_value_site_uv').innerText = value;
+  // 显示今日访问
+  todayRef.on('value', (s)=>{
+    const v = s.val() || 0;
+    const el = document.getElementById('today-count');
+    if (el) el.innerText = v;
   });
 </script></head>
 <body>  <div class="video-container">
@@ -78,6 +93,6 @@ img:hover {
     <p>继承人：uani.ome.22（TikTok）</p>
     <p>@2026 ©€€€€</p>
     <p>该网站创建于 2026 年 4 月 15 日，请勿复制。</p>
-    <p>🔥 当前访问人数：<span id="busuanzi_value_site_uv">加载中...</span> 👀</p>
+    <p>🔥 当前访问人数：<span id="busuanzi_value_site_uv">加载中...</span> 👀<br>📊 今日访问：<span id="today-count">加载中...</span></p>
   </footer></body>
-</html>
+                                                                                                           </html>
